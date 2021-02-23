@@ -25,7 +25,7 @@ set(USE_MPI ${USE_MPI} CACHE BOOL "Compile the host code with MPI support. This 
 set(USE_SVM No CACHE BOOL "Use SVM pointers instead of creating buffers on the board and transferring the data there before execution.")
 set(USE_HBM No CACHE BOOL "Use host code specific to HBM FPGAs")
 set(USE_CUSTOM_KERNEL_TARGETS No CACHE BOOL "Enable build targets for custom kernels")
-set(USE_DEPRECATED_HPP_HEADER ${header_default} CACHE BOOL "Flag that indicates if the old C++ wrapper header should be used (cl.hpp) or the newer version (cl2.hpp or opencl.hpp)")
+set(USE_DEPRECATED_HPP_HEADER No CACHE BOOL "Flag that indicates if the old C++ wrapper header should be used (cl.hpp) or the newer version (cl2.hpp or opencl.hpp)")
 set(HPCC_FPGA_CONFIG ${HPCC_FPGA_CONFIG} CACHE FILEPATH "Configuration file that is used to overwrite the default configuration")
 set(NUM_REPLICATIONS 4 CACHE STRING "Number of times the kernels will be replicated")
 set(KERNEL_REPLICATION_ENABLED Yes CACHE INTERNAL "Enables kernel replication for the OpenCL kernel targets")

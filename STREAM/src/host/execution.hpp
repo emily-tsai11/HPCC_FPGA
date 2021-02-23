@@ -29,7 +29,11 @@ SOFTWARE.
 #include <map>
 
 /* External library headers */
+#ifdef USE_DEPRECATED_HPP_HEADER
 #include "CL/cl.hpp"
+#else
+#include OPENCL_HPP_HEADER
+#endif
 #include "parameters.h"
 #include "stream_benchmark.hpp"
 
@@ -56,7 +60,7 @@ namespace bm_execution {
 
     /**
      * @brief This method will prepare and execute the FPGA kernel and measure the execution time
-     * 
+     *
      * @param config The ExecutionSettings with the OpenCL objects and program settings
      * @param A The array A of the stream benchmark
      * @param B The array B of the stream benchmark

@@ -1,5 +1,5 @@
 cmake-*
 .DS_Store
-build-*
+build*
 .idea
 *.pdf

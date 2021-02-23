@@ -29,7 +29,7 @@ SOFTWARE.
 #include <chrono>
 
 /* External library headers */
-#include "CL/cl.hpp"
+// #include "CL/cl.hpp"
 #include "CL/opencl.h"
 
 #ifdef INTEL_FPGA
@@ -143,7 +143,8 @@ namespace bm_execution {
         }
         startExecution = std::chrono::high_resolution_clock::now();
         for (int i=0; i<config.programSettings->kernelReplications; i++) {
-            ASSERT_CL(command_queues[i].enqueueTask(test_kernels[i]));
+			// ASSERT_CL(command_queues[i].enqueueTask(test_kernels[i]));
+			ASSERT_CL(command_queues[i].enqueueNDRangeKernel(test_kernels[i], cl::NullRange, cl::NDRange(data_per_kernel)));
         }
         for (int i=0; i<config.programSettings->kernelReplications; i++) {
             ASSERT_CL(command_queues[i].finish());
@@ -228,7 +229,8 @@ namespace bm_execution {
                 }
 #pragma omp for nowait
                 for (int i = 0; i < config.programSettings->kernelReplications; i++) {
-                    command_queues[i].enqueueTask(copy_kernels[i]);
+                    // command_queues[i].enqueueTask(copy_kernels[i]);
+					command_queues[i].enqueueNDRangeKernel(copy_kernels[i], cl::NullRange, cl::NDRange(data_per_kernel));
                 }
 #pragma omp for
                 for (int i = 0; i < config.programSettings->kernelReplications; i++) {
@@ -245,7 +247,8 @@ namespace bm_execution {
                 }
 #pragma omp for nowait
                 for (int i = 0; i < config.programSettings->kernelReplications; i++) {
-                    command_queues[i].enqueueTask(scale_kernels[i]);
+                    // command_queues[i].enqueueTask(scale_kernels[i]);
+					command_queues[i].enqueueNDRangeKernel(scale_kernels[i], cl::NullRange, cl::NDRange(data_per_kernel));
                 }
 #pragma omp for
                 for (int i = 0; i < config.programSettings->kernelReplications; i++) {
@@ -262,7 +265,8 @@ namespace bm_execution {
                 }
 #pragma omp for nowait
                 for (int i = 0; i < config.programSettings->kernelReplications; i++) {
-                    command_queues[i].enqueueTask(add_kernels[i]);
+                    // command_queues[i].enqueueTask(add_kernels[i]);
+					command_queues[i].enqueueNDRangeKernel(add_kernels[i], cl::NullRange, cl::NDRange(data_per_kernel));
                 }
 #pragma omp for
                 for (int i = 0; i < config.programSettings->kernelReplications; i++) {
@@ -279,7 +283,8 @@ namespace bm_execution {
                 }
 #pragma omp for nowait
                 for (int i = 0; i < config.programSettings->kernelReplications; i++) {
-                    command_queues[i].enqueueTask(triad_kernels[i]);
+                    // command_queues[i].enqueueTask(triad_kernels[i]);
+					command_queues[i].enqueueNDRangeKernel(triad_kernels[i], cl::NullRange, cl::NDRange(data_per_kernel));
                 }
 #pragma omp for
                 for (int i = 0; i < config.programSettings->kernelReplications; i++) {
@@ -445,6 +450,17 @@ namespace bm_execution {
             ASSERT_CL(err);
             cl::Kernel triadkernel(*config.program, ("calc_" + std::to_string(i)).c_str(), &err);
             ASSERT_CL(err);
+
+			// cl::Kernel testkernel(*config.program, "SimpleKernel", &err);
+            // ASSERT_CL(err);
+            // cl::Kernel copykernel(*config.program, "SimpleKernel", &err);
+            // ASSERT_CL(err);
+            // cl::Kernel scalekernel(*config.program, "SimpleKernel", &err);
+            // ASSERT_CL(err);
+            // cl::Kernel addkernel(*config.program, "SimpleKernel", &err);
+            // ASSERT_CL(err);
+            // cl::Kernel triadkernel(*config.program, "SimpleKernel", &err);
+            // ASSERT_CL(err);
 #endif
 #ifdef XILINX_FPGA
             // create the kernels

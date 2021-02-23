@@ -165,7 +165,7 @@ Sets up the given FPGA with the kernel in the provided file.
 
         // Create the Program from the AOCX file.
         cl::Program program(*context, deviceList, mybinaries, NULL, &err);
-        ASSERT_CL(err)
+        ASSERT_CL(err);
         if (world_rank == 0) {
             std::cout << "Prepared FPGA successfully for global Execution!" <<
                       std::endl;
@@ -226,7 +226,7 @@ choose a device.
 
         int world_rank = 0;
         int world_size = 1;
-        
+
 #ifdef _USE_MPI_
         MPI_Comm_rank(MPI_COMM_WORLD, &world_rank);
         MPI_Comm_size(MPI_COMM_WORLD, &world_size);

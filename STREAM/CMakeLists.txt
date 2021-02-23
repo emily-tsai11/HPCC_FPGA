@@ -30,4 +30,3 @@ if (MPI_FOUND)
 endif()
 
 include(${CMAKE_SOURCE_DIR}/../cmake/general_benchmark_build_setup.cmake)
-
