@@ -138,29 +138,33 @@ Sets up the given FPGA with the kernel in the provided file.
 
         if (world_rank == 0) {
             std::cout << HLINE;
-            std::cout << "FPGA Setup:" << usedKernelFile->c_str() << std::endl;
+            std::cout << "FPGA Setup: " << usedKernelFile->c_str() << std::endl;
         }
 
         // Open file stream if possible
-        std::ifstream aocxStream(usedKernelFile->c_str(), std::ifstream::binary);
+//        std::ifstream aocxStream(usedKernelFile->c_str(), std::ifstream::binary);
+        std::ifstream aocxStream(usedKernelFile->c_str(), std::ios::in | std::ios::binary);
         if (!aocxStream.is_open()) {
             std::cerr << "Not possible to open from given file!" << std::endl;
             throw FpgaSetupException("Not possible to open from given file: " + *usedKernelFile);
         }
 
         // Read in file contents and create program from binaries
-        aocxStream.seekg(0, aocxStream.end);
-        long file_size = aocxStream.tellg();
-        aocxStream.seekg(0, aocxStream.beg);
-        std::vector<unsigned char> buf(file_size);
-        aocxStream.read(reinterpret_cast<char *>(buf.data()), file_size);
+//        aocxStream.seekg(0, aocxStream.end);
+//        long file_size = aocxStream.tellg();
+//        aocxStream.seekg(0, aocxStream.beg);
+//        std::vector<unsigned char> buf(file_size);
+//        aocxStream.read(reinterpret_cast<char *>(buf.data()), file_size);
+        std::string prog1(std::istreambuf_iterator<char>(aocxStream), (std::istreambuf_iterator<char>()));
+
 
 
 #ifdef USE_DEPRECATED_HPP_HEADER
         cl::Program::Binaries mybinaries;
         mybinaries.push_back({buf.data(), file_size});
 #else
-        cl::Program::Binaries mybinaries{buf};
+//        cl::Program::Binaries mybinaries{buf};
+        cl::Program::Binaries mybinaries{std::vector<unsigned char>(prog1.begin(), prog1.end())};
 #endif
 
         // Create the Program from the AOCX file.

@@ -450,17 +450,6 @@ namespace bm_execution {
             ASSERT_CL(err);
             cl::Kernel triadkernel(*config.program, ("calc_" + std::to_string(i)).c_str(), &err);
             ASSERT_CL(err);
-
-			// cl::Kernel testkernel(*config.program, "SimpleKernel", &err);
-            // ASSERT_CL(err);
-            // cl::Kernel copykernel(*config.program, "SimpleKernel", &err);
-            // ASSERT_CL(err);
-            // cl::Kernel scalekernel(*config.program, "SimpleKernel", &err);
-            // ASSERT_CL(err);
-            // cl::Kernel addkernel(*config.program, "SimpleKernel", &err);
-            // ASSERT_CL(err);
-            // cl::Kernel triadkernel(*config.program, "SimpleKernel", &err);
-            // ASSERT_CL(err);
 #endif
 #ifdef XILINX_FPGA
             // create the kernels
